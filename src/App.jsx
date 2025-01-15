@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 export default function App() {
@@ -14,28 +12,25 @@ export default function App() {
       setPokemonList(JSON.parse(storedPokemonList));
       getRandomPokemon(); 
     } else {
-      fetchAllPokemon();
+      fetchAllPokemon()
+        .then(list => {
+          setPokemonList(list);
+          localStorage.setItem('pokemonList', JSON.stringify(list)); 
+          getRandomPokemon(); 
+        });
     }
-  }, []);
+  }, []); 
 
   const fetchAllPokemon = () => {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+    return fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
       .then(response => response.json())
-      .then(data => {
-        const pokemonList = data.results;
-        setPokemonList(pokemonList);
-        localStorage.setItem('pokemonList', JSON.stringify(pokemonList));
-        getRandomPokemon(); // Call getRandomPokemon after storing data
-      })
-      .catch(error => {
-        console.error('Error fetching Pokémon data:', error);
-      });
+      .then(data => data.results); 
   };
 
   const getRandomPokemon = () => {
     if (pokemonList.length > 0) {
       const randomIndex = Math.floor(Math.random() * pokemonList.length);
-      const randomPokemon = pokemonList[randomIndex]; 
+      const randomPokemon = pokemonList[randomIndex];
 
       fetch(randomPokemon.url)
         .then(response => response.json())
@@ -49,22 +44,37 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <div>
-        <button onClick={getRandomPokemon}>RANDOMIZE</button>
+        <button className='button' onClick={getRandomPokemon}>RANDOMIZE</button>
       </div>
 
       <div className="character-info">
-        <div className="image-container">
-          {currentPokemon && (
-            <img
-              src={currentPokemon.sprites.front_default}
-              alt={currentPokemon.name}
-            />
-          )}
-        </div>
-        <p>{currentPokemon?.name}</p>
+        {currentPokemon ? (
+          <>
+            <div className="image-container">
+              <img
+                src={currentPokemon.sprites.front_default}
+                alt={currentPokemon.name}
+              />
+            </div>
+            <p><strong>{currentPokemon.name.toUpperCase()}</strong></p> 
+            <div className="specific-data">
+              <p><strong>Type:</strong> {currentPokemon.types.map(type => type.type.name).join(', ')}</p>
+              <p><strong>Abilities:</strong> {currentPokemon.abilities.map(ability => ability.ability.name).join(', ')}</p>
+              <p><strong>Height:</strong> {currentPokemon.height / 10} m</p> 
+              <p><strong>Weight:</strong> {currentPokemon.weight / 10} kg</p>  
+            </div>
+          </>
+        ) : (
+          <p>CLICK THE BUTTON TO DISPLAY A CHARACTER</p>
+        )}
       </div>
     </div>
   );
 }
+
+
+
+
+
