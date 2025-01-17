@@ -6,25 +6,30 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  font-family: sans-serif; /* Add a font for better readability */
-  background-color: red;
+  font-family: 'Press Start 2P', sans-serif;  /* Add a font for better readability */
+ 
   
 }
 
 .container {
   text-align: center;
-  background-color: yellow;
+  background-color: rgb(58, 52, 52);
   margin: 0px;
   height: 100vh;
+  
+}
+.image-name{
+  color: blue;
 }
 
 .image-container {
-  width: 200px; /* Adjust as needed */
-  height: 200px; /* Adjust as needed */
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 200px; 
+  height: 200px; 
+  
+ 
   overflow: hidden;
   margin: 0 auto;
+  
 }
 
 .image-container img {
@@ -42,13 +47,34 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  
 }
 .specific-data p {
   font-size: 30px; /* Increase the font size here */
+  
+  padding: 5px; /* Add some padding for better spacing */
+  margin-bottom: 5px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
 }
 .specific-data{
   padding-bottom: 25px;
   padding-top: 25px;
   padding-left: 20px;
   padding-right: 20px;
+  text-align: left;
+  
+
+}
+@media (max-width: 768px) { /* Adjust width as needed */
+  .image-container {
+    width: 100px; 
+    height: 100px; 
+  }
+}
+.container > div > button{
+  margin-bottom: 10px;
+  margin-top: 10px;
 }

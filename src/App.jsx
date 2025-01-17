@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import './App.css'
 
 export default function App() {
@@ -45,10 +51,11 @@ export default function App() {
 
   return (
     <div className='container'>
-      <div>
-        <button className='button' onClick={getRandomPokemon}>RANDOMIZE</button>
+       <div>
+          <Button variant="contained" color="primary" onClick={getRandomPokemon}>
+            RANDOMIZE
+          </Button>
       </div>
-
       <div className="character-info">
         {currentPokemon ? (
           <>
@@ -58,7 +65,7 @@ export default function App() {
                 alt={currentPokemon.name}
               />
             </div>
-            <p><strong>{currentPokemon.name.toUpperCase()}</strong></p> 
+            <p className='image-name'><strong>{currentPokemon.name.toUpperCase()}</strong></p> 
             <div className="specific-data">
               <p><strong>Type:</strong> {currentPokemon.types.map(type => type.type.name).join(', ')}</p>
               <p><strong>Abilities:</strong> {currentPokemon.abilities.map(ability => ability.ability.name).join(', ')}</p>
